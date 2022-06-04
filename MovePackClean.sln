@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32414.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovePackCleanApi", "MovePackCleanApi\MovePackCleanApi.csproj", "{C1114780-C70A-413D-89B4-103D44E20CF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSource", "DataSource\DataSource.csproj", "{B8BF3875-0A42-4071-9EF4-CDC29B4BCD30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1114780-C70A-413D-89B4-103D44E20CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1114780-C70A-413D-89B4-103D44E20CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1114780-C70A-413D-89B4-103D44E20CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1114780-C70A-413D-89B4-103D44E20CF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8BF3875-0A42-4071-9EF4-CDC29B4BCD30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BF3875-0A42-4071-9EF4-CDC29B4BCD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BF3875-0A42-4071-9EF4-CDC29B4BCD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BF3875-0A42-4071-9EF4-CDC29B4BCD30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4601A32B-D4D9-4E7A-9BE7-2BE5C502A216}
+	EndGlobalSection
+EndGlobal
