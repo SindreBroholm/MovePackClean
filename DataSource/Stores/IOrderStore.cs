@@ -3,12 +3,14 @@
 public interface IOrderStore
 {
     Task<int> PlaceNewOrder(int customerId, OrderDetail orderDetail);
+    Task<Order?> GetOrderById(int orderId);
 }
 
 public sealed record Order
 {
-    public Customer Customer { get; init; } = new();
-    public OrderDetail OrderDetail { get; init; } = new();
+    public int OrderId { get; init; }
+    public Customers Customer { get; set; } = new();
+    public OrderDetail OrderDetail { get; set; } = new();
 }
 
 public sealed record OrderDetail

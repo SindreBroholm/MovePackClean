@@ -2,14 +2,13 @@
 
 public interface ICustomerStore
 {
-    IAsyncEnumerable<Customer> SearchForCustomer(string customerInfo);
-    IAsyncEnumerable<Customer> GetCustomer(int customerId);
-
-    Task<int> NewCustomer(Customer customer);
-    Task<bool> UpdateCustomerInformation(Customer customer);
+    IAsyncEnumerable<Customers> SearchForCustomer(string customerInfo);
+    Task<Customers?> GetCustomer(int customerId);
+    Task<int> NewCustomer(Customers customer);
+    Task<bool> UpdateCustomerInformation(Customers customer);
 }
 
-public sealed record Customer
+public sealed record Customers
 {
     public int CustomerId { get; init; }
     public string Name { get; init; } = String.Empty;

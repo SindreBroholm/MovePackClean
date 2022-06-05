@@ -28,21 +28,21 @@ namespace MovePackCleanApi.Controllers
         }
 
         [HttpGet("customer/{customerId}")]
-        public async Task<ActionResult<Customer>> GetCustomer([FromRoute] int customerId)
+        public async Task<ActionResult<Customers>> GetCustomer([FromRoute] int customerId)
         {
             var customer = await customerService.GetCustomer(customerId);
             return customer is null ? NotFound() : Ok(customer);
         }
 
         [HttpGet("customer/search/{customerInfo}")]
-        public async Task<ActionResult<Customer>> SearchForCusomter([FromRoute] string customerInfo)
+        public async Task<ActionResult<Customers>> SearchForCusomter([FromRoute] string customerInfo)
         {
             var customer = await customerService.SearchForCustomer(customerInfo);
             return customer is null ? NotFound() : Ok(customer);
         }
 
         [HttpPut("customer/{customerId}/update")]
-        public async Task<ActionResult<Customer>> UpdateCustomer([FromRoute] int customerId, [FromQuery] string? name, [FromQuery] string? phoneNumber, [FromQuery] string? email)
+        public async Task<ActionResult<Customers>> UpdateCustomer([FromRoute] int customerId, [FromQuery] string? name, [FromQuery] string? phoneNumber, [FromQuery] string? email)
         {
             var customer = await customerService.GetCustomer(customerId);
             if (customer is null)
@@ -52,17 +52,23 @@ namespace MovePackCleanApi.Controllers
             customer = await customerService.UpdateCustomerInformation(customer, name, phoneNumber, email);
             return customer is not null ? Ok(customer) : StatusCode(StatusCodes.Status500InternalServerError);
         }
+        [HttpGet("customer/order/{orderId}")]
+        public async Task<ActionResult> GetOrder([FromRoute] int orderId)
+        {
+            return Ok(await orderService.GetOrderById(orderId));
+        }
 
-        [HttpPost("order/create")]
+        [HttpPost("customer/order/create")]
         public async Task<ActionResult> PlaceNewOrder([FromBody] Order order)
         {
             return Ok(await orderService.PlaceNewOrder(order));
         }
 
-        //[HttpPut("order/update/")]
-        //public async Task<ActionResult> UpdateOrder([FromBody] OrderDetail orderDetail)
-        //{
-
-        //}
+        [HttpPut("customer/order/update")]
+        public async Task<ActionResult> UpdateOrder([FromBody] OrderDetail orderDetails)
+        {
+            var updatedOrderDetails = await orderService.UpdateOrderInformation(orderDetails);
+            return updatedOrderDetails is not null ? Ok(updatedOrderDetails) : StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

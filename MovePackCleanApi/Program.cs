@@ -10,6 +10,7 @@ builder.Services.AddScoped<DapperContext>();
 builder.Services.AddScoped<IServiceTypesStore, ServiceTypeStore>();
 builder.Services.AddScoped<ICustomerStore, CustomerStore>();
 builder.Services.AddScoped<IOrderStore, OrderStore>();
+builder.Services.AddScoped<IOrderDetailStore, OrderDetailStore>();
 // Services
 builder.Services.AddScoped<ServiceTypeService>();
 builder.Services.AddScoped<OrderService>();

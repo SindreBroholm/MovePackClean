@@ -11,7 +11,7 @@ public class CustomerStore : ICustomerStore
         this.context = context;
     }
 
-    public async Task<bool> UpdateCustomerInformation(Customer udatedInfo)
+    public async Task<bool> UpdateCustomerInformation(Customers udatedInfo)
     {
         var query = @"
             UPDATE [dbo].[Customers]
@@ -32,7 +32,7 @@ public class CustomerStore : ICustomerStore
         return result > 0;
     }
 
-    public async IAsyncEnumerable<Customer> SearchForCustomer(string customerInfo)
+    public async IAsyncEnumerable<Customers> SearchForCustomer(string customerInfo)
     {
         var query = @"
             SELECT DISTINCT 
@@ -44,13 +44,13 @@ public class CustomerStore : ICustomerStore
         ";
 
         using var connection = context.CreateConnection();
-        foreach (var customer in await connection.QueryAsync<Customer>(query, new { customerInfo = customerInfo }))
+        foreach (var customer in await connection.QueryAsync<Customers>(query, new { customerInfo = customerInfo }))
         {
                 yield return customer;
         }
     }
 
-    public async Task<int> NewCustomer(Customer customer)
+    public async Task<int> NewCustomer(Customers customer)
     {
         var query = @"
             INSERT INTO [dbo].[Customers]
@@ -72,20 +72,17 @@ public class CustomerStore : ICustomerStore
         return await customerId;
     }
 
-    public async IAsyncEnumerable<Customer> GetCustomer(int customerId)
+    public async Task<Customers?> GetCustomer(int customerId)
     {
         var query = @"
             SELECT DISTINCT 
                 [CustomerId], [Name], [PhoneNumber], [Email]
             FROM [dbo].[Customers]
-                WHERE [CustomerId] = @customerId
+                WHERE [CustomerId] = @CustomerId
         ";
 
         using var connection = context.CreateConnection();
 
-        foreach (var customer in await connection.QueryAsync<Customer>(query, new { customerId = customerId }))
-        {
-            yield return customer;
-        }
+        return await connection.QueryFirstOrDefaultAsync<Customers>(query, new { CustomerId = customerId });
     }
 }
