@@ -75,6 +75,7 @@ public class MovePackCleanController : ControllerBase
     public async Task<ActionResult> DeleteOrder([FromRoute] int orderId)
     {
         var order = await orderService.GetOrderById(orderId);
-        return order is not null ? await orderService.DeleteOrder(orderId) : NotFound();
+        var isDeleted = await orderService.DeleteOrder(orderId);
+        return order is null ? NotFound() : isDeleted is true ? NoContent() : StatusCode(StatusCodes.Status500InternalServerError);
     }
 }

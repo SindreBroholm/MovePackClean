@@ -2,8 +2,8 @@
 (
 	[CustomerId] int NOT NULL IDENTITY(1,1),
 	[Name] nvarchar(max) NOT NULL,
-	[PhoneNumber] nvarchar(max) NOT NULL UNIQUE,
-	[Email] nvarchar(max) NOT NULL UNIQUE,
+	[PhoneNumber] nvarchar(max) NOT NULL,
+	[Email] nvarchar(max) NOT NULL,
 	PRIMARY KEY ([CustomerId])
 );
 GO
