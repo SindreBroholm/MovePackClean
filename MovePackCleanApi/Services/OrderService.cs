@@ -16,6 +16,11 @@ public class OrderService
         this.orderDetailStore = orderDetailStore;
     }
 
+    public async Task<bool> DeleteOrder(int orderId)
+    {
+       return await orderStore.DeleteOrder(orderId);    
+    }
+
     public async Task<Order?> PlaceNewOrder(Order order)
     {
         var customer = await customerStore.GetCustomer(order.Customer.CustomerId);

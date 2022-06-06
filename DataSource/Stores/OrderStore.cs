@@ -11,6 +11,17 @@ public class OrderStore : IOrderStore
         this.context = context;
     }
 
+    public async Task<bool> DeleteOrder(int orderId)
+    {
+        var query = @"
+            DELETE FROM ORDERS
+            WHERE [OrderId] = @OrderId
+        ";
+
+        using var connection = context.CreateConnection();
+        return await connection.ExecuteAsync(query, new { OrderId = orderId }) > 0;
+    }
+
     public async Task<Order?> GetOrderById(int orderId)
     {
         var query = @"

@@ -4,6 +4,7 @@ public interface IOrderStore
 {
     Task<int> PlaceNewOrder(int customerId, OrderDetail orderDetail);
     Task<Order?> GetOrderById(int orderId);
+    Task<bool> DeleteOrder(int orderId);
 }
 
 public sealed record Order
