@@ -11,18 +11,18 @@ public class OrderStore : IOrderStore
         this.context = context;
     }
 
-    public async Task<bool> DeleteOrder(int orderId)
+    public async Task<bool> DeleteOrderDetail(int orderDetailId)
     {
         var query = @"
-            DELETE FROM ORDERS
-            WHERE [OrderId] = @OrderId
+            DELETE FROM OrderDetails
+            WHERE [OrderDetailId] = @OrderDetailId
         ";
 
         using var connection = context.CreateConnection();
-        return await connection.ExecuteAsync(query, new { OrderId = orderId }) > 0;
+        return await connection.ExecuteAsync(query, new { OrderDetailId = orderDetailId }) > 0;
     }
 
-    public async Task<Order?> GetOrderById(int orderId)
+    public async Task<Order?> GetOrderByOrderDetailId(int orderDetailId)
     {
         var query = @"
             SELECT
@@ -35,13 +35,13 @@ public class OrderStore : IOrderStore
         ";
 
         using var connection = context.CreateConnection();
-        var order = await connection.QueryAsync<Order, Customers, OrderDetail, Order>(query, 
+        var order = await connection.QueryAsync<Order, Customer, OrderDetail, Order>(query, 
             (order, Customers, OrderDetail) => {
                 order.Customer = Customers;
                 order.OrderDetail = OrderDetail;
                 return order; }, splitOn: "CustomerId, OrderDetailId");
         
-        return order.FirstOrDefault(o => o.OrderId == orderId);
+        return order.FirstOrDefault(o => o.OrderDetail.OrderDetailId == orderDetailId);
     }
 
     public async Task<int> PlaceNewOrder(int customerId, OrderDetail orderDetail)

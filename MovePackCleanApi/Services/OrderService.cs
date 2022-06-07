@@ -1,5 +1,4 @@
 ﻿using DataSource.Stores;
-using System.Linq;
 
 namespace MovePackCleanApi.Services;
 
@@ -16,9 +15,9 @@ public class OrderService
         this.orderDetailStore = orderDetailStore;
     }
 
-    public async Task<bool> DeleteOrder(int orderId)
+    public async Task<bool> DeleteOrder(int orderDetailId)
     {
-       return await orderStore.DeleteOrder(orderId);    
+       return await orderStore.DeleteOrderDetail(orderDetailId);    
     }
 
     public async Task<Order?> PlaceNewOrder(Order order)
@@ -27,7 +26,7 @@ public class OrderService
 
         var customerId = customer is null ? await customerStore.NewCustomer(order.Customer) : order.Customer.CustomerId;
         var orderId = await orderStore.PlaceNewOrder(customerId, order.OrderDetail);
-        return await orderStore.GetOrderById(orderId);
+        return await orderStore.GetOrderByOrderDetailId(orderId);
     }
 
     public async Task<OrderDetail?> UpdateOrderInformation(OrderDetail orderDetail)
@@ -36,8 +35,8 @@ public class OrderService
         return await orderDetailStore.GetOrderDetailById(orderDetail.OrderDetailId);
     }
 
-    public async Task<Order?> GetOrderById(int orderId)
+    public async Task<Order?> GetOrderByOrderDetailId(int orderId)
     {
-        return await orderStore.GetOrderById(orderId);
+        return await orderStore.GetOrderByOrderDetailId(orderId);
     }
 }

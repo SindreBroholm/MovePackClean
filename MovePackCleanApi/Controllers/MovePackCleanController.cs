@@ -28,21 +28,21 @@ public class MovePackCleanController : ControllerBase
     }
 
     [HttpGet("customer/{customerId}")]
-    public async Task<ActionResult<Customers>> GetCustomer([FromRoute] int customerId)
+    public async Task<ActionResult<Customer>> GetCustomer([FromRoute] int customerId)
     {
         var customer = await customerService.GetCustomer(customerId);
-        return customer is null ? NotFound() : Ok(customer);
+        return customer is not null ? Ok(customer) : NotFound();
     }
 
     [HttpGet("customer/search/{customerInfo}")]
-    public async Task<ActionResult<Customers>> SearchForCusomter([FromRoute] string customerInfo)
+    public async Task<ActionResult<Customer>> SearchForCusomter([FromRoute] string customerInfo)
     {
         var customer = await customerService.SearchForCustomer(customerInfo);
-        return customer is null ? NotFound() : Ok(customer);
+        return customer is not null ? Ok(customer) : NotFound();
     }
 
     [HttpPut("customer/{customerId}/update")]
-    public async Task<ActionResult<Customers>> UpdateCustomer([FromRoute] int customerId, [FromQuery] string? name, [FromQuery] string? phoneNumber, [FromQuery] string? email)
+    public async Task<ActionResult<Customer>> UpdateCustomer([FromRoute] int customerId, [FromQuery] string? name, [FromQuery] string? phoneNumber, [FromQuery] string? email)
     {
         var customer = await customerService.GetCustomer(customerId);
         if (customer is null)
@@ -52,10 +52,11 @@ public class MovePackCleanController : ControllerBase
         customer = await customerService.UpdateCustomerInformation(customer, name, phoneNumber, email);
         return customer is not null ? Ok(customer) : StatusCode(StatusCodes.Status500InternalServerError);
     }
-    [HttpGet("customer/order/{orderId}")]
-    public async Task<ActionResult> GetOrder([FromRoute] int orderId)
+    [HttpGet("customer/order/{orderDetailId}")]
+    public async Task<ActionResult> GetOrder([FromRoute] int orderDetailId)
     {
-        return Ok(await orderService.GetOrderById(orderId));
+        var order = await orderService.GetOrderByOrderDetailId(orderDetailId);
+        return order is not null ? Ok(order) : NotFound();
     }
 
     [HttpPost("customer/order/create")]
@@ -71,11 +72,11 @@ public class MovePackCleanController : ControllerBase
         return updatedOrderDetails is not null ? Ok(updatedOrderDetails) : StatusCode(StatusCodes.Status500InternalServerError);
     }
 
-    [HttpDelete("customer/order/{orderId}/delete")]
-    public async Task<ActionResult> DeleteOrder([FromRoute] int orderId)
+    [HttpDelete("customer/order/{orderDetailId}/delete")]
+    public async Task<ActionResult> DeleteOrder([FromRoute] int orderDetailId)
     {
-        var order = await orderService.GetOrderById(orderId);
-        var isDeleted = await orderService.DeleteOrder(orderId);
+        var order = await orderService.GetOrderByOrderDetailId(orderDetailId);
+        var isDeleted = await orderService.DeleteOrder(orderDetailId);
         return order is null ? NotFound() : isDeleted is true ? NoContent() : StatusCode(StatusCodes.Status500InternalServerError);
     }
 }

@@ -11,18 +11,18 @@ public class CustomerService
         this.customerStore = customerStore;
     }
 
-    public async Task<Customers?> GetCustomer(int customerId)
+    public async Task<Customer?> GetCustomer(int customerId)
     {
         return await customerStore.GetCustomer(customerId);
     }
-    public async Task<Customers?> SearchForCustomer(string customerInfo)
+    public async Task<Customer?> SearchForCustomer(string customerInfo)
     {
         return await customerStore.SearchForCustomer(customerInfo).FirstOrDefaultAsync();
     }
 
-    public async Task<Customers?> UpdateCustomerInformation(Customers customer, string? name, string? phoneNumber, string? email)
+    public async Task<Customer?> UpdateCustomerInformation(Customer customer, string? name, string? phoneNumber, string? email)
     {
-        var udatedInfo = new Customers()
+        var udatedInfo = new Customer()
         {
             CustomerId = customer.CustomerId,
             Name = name ?? customer.Name,
